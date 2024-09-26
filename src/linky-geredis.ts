@@ -2,21 +2,22 @@ import { Session } from 'linky-geredis';
 import dayjs, { Dayjs } from 'dayjs';
 import { debug, info, warn } from './log.js';
 import {
+  formatAsStatistics,
   formatDailyData,
   formatLoadCurve,
-  formatAsStatistics,
-  type StatisticDataPoint,
   type LinkyDataPoint,
+  type StatisticDataPoint,
 } from './format.js';
 
-export class LinkyClient {
+export class LinkyGeredisClient {
   private session: Session;
-  public prm: string;
-  public isProduction: boolean;
-  constructor(token: string, prm: string, isProduction: boolean) {
-    this.prm = prm;
-    this.isProduction = isProduction;
-    this.session = new Session(token, prm);
+  public user: string;
+  public password: string;
+
+  constructor(user: string, password: string) {
+    this.user = user;
+    this.password = password;
+    this.session = new Session(user, password);
     this.session.userAgent = 'ha-linky/1.5.0';
   }
 
@@ -24,7 +25,7 @@ export class LinkyClient {
     const history: LinkyDataPoint[][] = [];
     let offset = 0;
     let limitReached = false;
-    const keyword = this.isProduction ? 'production' : 'consumption';
+    const keyword = 'consumption';
 
     let interval = 7;
 
@@ -39,9 +40,7 @@ export class LinkyClient {
     let to = dayjs().subtract(offset, 'days').format('YYYY-MM-DD');
 
     try {
-      const loadCurve = this.isProduction
-        ? await this.session.getProductionLoadCurve(from, to)
-        : await this.session.getLoadCurve(from, to);
+      const loadCurve = await this.session.getLoadCurve(from, to);
       history.unshift(formatLoadCurve(loadCurve.interval_reading));
       debug(`Successfully retrieved ${keyword} load curve from ${from} to ${to}`);
       offset += interval;
@@ -66,9 +65,7 @@ export class LinkyClient {
       }
 
       try {
-        const dailyData = this.isProduction
-          ? await this.session.getDailyProduction(from, to)
-          : await this.session.getDailyConsumption(from, to);
+        const dailyData = await this.session.getDailyConsumption(from, to);
         history.unshift(formatDailyData(dailyData.interval_reading));
         debug(`Successfully retrieved daily ${keyword} data from ${from} to ${to}`);
         offset += interval;

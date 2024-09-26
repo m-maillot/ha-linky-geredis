@@ -1,8 +1,8 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-LABEL org.opencontainers.image.source=https://github.com/bokub/ha-linky
-LABEL org.opencontainers.image.description="HA Linky Add-on"
+LABEL org.opencontainers.image.source=https://github.com/m-maillot/ha-linky-geredis
+LABEL org.opencontainers.image.description="HA Linky Geredis Add-on"
 LABEL org.opencontainers.image.licenses=MIT
 
 RUN apk add --no-cache nodejs npm

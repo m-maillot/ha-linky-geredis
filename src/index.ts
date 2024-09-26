@@ -1,5 +1,5 @@
 import { HomeAssistantClient } from './ha.js';
-import { LinkyClient } from './linky.js';
+import { LinkyGeredisClient } from './linky-geredis.js';
 import { getUserConfig, MeterConfig } from './config.js';
 import { getMeterHistory } from './history.js';
 import { incrementSums } from './format.js';
@@ -49,7 +49,10 @@ async function main() {
     let energyData = await getMeterHistory(config.prm);
 
     if (energyData.length === 0) {
-      const client = new LinkyClient(config.token, config.prm, config.production);
+      const index = config.token.indexOf(':');
+      const user = config.token.substring(0, index);
+      const password = config.token.substring(index + 1);
+      const client = new LinkyGeredisClient(user, password);
       energyData = await client.getEnergyData(null);
     }
 
@@ -100,7 +103,11 @@ async function main() {
       debug('Everything is up-to-date, nothing to synchronize');
       return;
     }
-    const client = new LinkyClient(config.token, config.prm, config.production);
+
+    const index = config.token.indexOf(':');
+    const user = config.token.substring(0, index);
+    const password = config.token.substring(index + 1);
+    const client = new LinkyGeredisClient(user, password);
     const firstDay = dayjs(lastStatistic.start).add(1, 'day');
     const energyData = await client.getEnergyData(firstDay);
     await haClient.saveStatistics({
