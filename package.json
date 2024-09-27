@@ -16,7 +16,7 @@
     "csv-parse": "^5.5.3",
     "dayjs": "^1.11.9",
     "linky": "^2.0.2",
-    "linky-geredis": "^0.0.3",
+    "linky-geredis": "^0.0.4",
     "node-cron": "^3.0.2",
     "websocket": "^1.0.34"
   },
