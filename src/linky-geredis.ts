@@ -18,7 +18,7 @@ export class LinkyGeredisClient {
     this.user = user;
     this.password = password;
     this.session = new Session(user, password);
-    this.session.userAgent = 'ha-linky/1.5.0';
+    this.session.userAgent = 'ha-linky/1.5.2';
   }
 
   public async getEnergyData(firstDay: null | Dayjs): Promise<StatisticDataPoint[]> {
