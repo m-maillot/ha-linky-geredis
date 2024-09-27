@@ -1,7 +1,7 @@
 {
   "name": "ha-linky-geredis",
   "private": true,
-  "version": "1.5.2",
+  "version": "1.5.3",
   "type": "module",
   "scripts": {
     "build": "tsc",
@@ -16,7 +16,7 @@
     "csv-parse": "^5.5.3",
     "dayjs": "^1.11.9",
     "linky": "^2.0.2",
-    "linky-geredis": "^0.0.4",
+    "linky-geredis": "^0.0.5",
     "node-cron": "^3.0.2",
     "websocket": "^1.0.34"
   },
