@@ -26,7 +26,7 @@ export class LinkyGeredisClient {
     let limitReached = false;
     const keyword = 'consumption';
 
-    let interval = 7;
+    let interval = 90;
 
     let fromDate = dayjs().subtract(offset + interval, 'days');
     let from = fromDate.format('YYYY-MM-DD');
