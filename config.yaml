@@ -1,6 +1,6 @@
 name: Linky Geredis
 description: Sync Energy dashboards with your Linky Geredis smart meter
-version: 1.5.3
+version: 1.5.4
 slug: linky-geredis
 init: false
 url: https://github.com/m-maillot/ha-linky-geredis
