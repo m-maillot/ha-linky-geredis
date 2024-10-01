@@ -1,4 +1,4 @@
-import { Session } from 'linky-geredis';
+import { Session } from 'linky';
 import dayjs, { Dayjs } from 'dayjs';
 import { debug, info, warn } from './log.js';
 import {
@@ -13,6 +13,7 @@ export class LinkyClient {
   private session: Session;
   public prm: string;
   public isProduction: boolean;
+
   constructor(token: string, prm: string, isProduction: boolean) {
     this.prm = prm;
     this.isProduction = isProduction;
